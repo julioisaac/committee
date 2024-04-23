@@ -1,5 +1,7 @@
-package org.cia.committee.domain.user.model;
+package org.cia.committee.domain.model;
 
+import org.cia.committee.domain.model.Role;
+import org.cia.committee.domain.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
