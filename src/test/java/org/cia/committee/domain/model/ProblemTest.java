@@ -1,16 +1,27 @@
-package org.cia.committee.domain.problem.model;
+package org.cia.committee.domain.model;
 
+import org.cia.committee.domain.model.Comment;
+import org.cia.committee.domain.model.Problem;
+import org.cia.committee.domain.model.ProblemState;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 class ProblemTest {
 
+    User user;
+
+    @BeforeEach
+    void setUp() {
+        user = new User("Julio");
+    }
+
     @Test
     void givenAName_whenCreateAProblem_thenAProblemIsReturned() {
         String problemName = "Problem 1";
-        Problem problem = new Problem(problemName);
+        Problem problem = new Problem(user.getUUID(), problemName);
 
         Assertions.assertNotNull(problem.getUUID());
         Assertions.assertEquals(ProblemState.OPENED, problem.getState());
@@ -24,7 +35,7 @@ class ProblemTest {
 
         Comment comment = new Comment("problem 2 comment");
 
-        Problem problem = new Problem(problemName);
+        Problem problem = new Problem(user.getUUID(), problemName);
         problem.addComment(comment);
 
         Assertions.assertEquals(ProblemState.READY, problem.getState());
@@ -37,7 +48,7 @@ class ProblemTest {
 
         Comment comment = new Comment("problem 3 comment");
 
-        Problem problem = new Problem(problemName);
+        Problem problem = new Problem(user.getUUID(), problemName);
         problem.addComment(comment);
         problem.assign(committeeUUID);
 
@@ -49,10 +60,10 @@ class ProblemTest {
         String problemName = "Problem 4";
         UUID committeeUUID = UUID.randomUUID();
 
-        Problem problem = new Problem(problemName);
+        Problem problem = new Problem(user.getUUID(), problemName);
         problem.assign(committeeUUID);
 
-        Assertions.assertNull(problem.getCommitteeUUID());
+        Assertions.assertFalse(problem.canBeAssigned());
     }
 
     @Test
@@ -62,7 +73,7 @@ class ProblemTest {
 
         Comment comment = new Comment("problem 5 comment");
 
-        Problem problem = new Problem(problemName);
+        Problem problem = new Problem(user.getUUID(), problemName);
         problem.addComment(comment);
         problem.assign(committeeUUID);
 

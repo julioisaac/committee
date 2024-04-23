@@ -1,9 +1,10 @@
-package org.cia.committee.domain.committee.model;
+package org.cia.committee.domain.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +25,7 @@ class CommitteeTest {
         LocalDate committeeDate = LocalDate.now();
 
         Committee committee = new Committee(committeeDate);
+        committee.assignDirector(UUID.randomUUID());
         committee.start();
 
         assertEquals(CommitteeState.IN_PROGRESS, committee.getState());
