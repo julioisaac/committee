@@ -1,4 +1,4 @@
-package org.cia.committee.domain.problem.model;
+package org.cia.committee.domain.model;
 
 import java.time.LocalDateTime;
 

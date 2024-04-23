@@ -1,4 +1,4 @@
-package org.cia.committee.domain.committee.model;
+package org.cia.committee.domain.model;
 
 public enum CommitteeState {
     PLANNED,
