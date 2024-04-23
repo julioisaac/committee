@@ -1,6 +1,7 @@
 package org.cia.committee.domain.services;
 
 import org.cia.committee.common.exception.ParameterNotFoundException;
+import org.cia.committee.domain.ports.outbound.EventPublisherPort;
 import org.junit.jupiter.api.Test;
 
 import org.cia.committee.domain.model.Problem;
@@ -17,8 +18,9 @@ public class CreateProblemServiceTest {
     void givenValidUserUUID_whenCreateProblem_shouldCreateProblemSuccessfully() throws ParameterNotFoundException {
         Problem problem = new Problem(UUID.randomUUID(), "Test Problem");
         CreateProblemPort createProblemPort = Mockito.mock(CreateProblemPort.class);
+        EventPublisherPort eventPublisherPort = Mockito.mock(EventPublisherPort.class);
         Mockito.when(createProblemPort.createProblem(problem)).thenReturn(UUID.randomUUID());
-        CreateProblemService service = new CreateProblemService(createProblemPort);
+        CreateProblemService service = new CreateProblemService(createProblemPort, eventPublisherPort);
 
         UUID createdProblemUUID = service.createProblem(problem);
 
@@ -29,7 +31,8 @@ public class CreateProblemServiceTest {
     void givenNullUserUUID_whenCreateProblem_shouldThrowParameterNotFoundException() {
         Problem problem = new Problem(null, "Test Problem");
         CreateProblemPort createProblemPort = Mockito.mock(CreateProblemPort.class);
-        CreateProblemService service = new CreateProblemService(createProblemPort);
+        EventPublisherPort eventPublisherPort = Mockito.mock(EventPublisherPort.class);
+        CreateProblemService service = new CreateProblemService(createProblemPort, eventPublisherPort);
 
         assertThrows(ParameterNotFoundException.class, () -> service.createProblem(problem));
     }
@@ -38,7 +41,8 @@ public class CreateProblemServiceTest {
     void giveEmptyProblemName_whenCreateProblem_shouldThrowParameterNotFoundException() {
         Problem problem = new Problem(UUID.randomUUID(), "");
         CreateProblemPort createProblemPort = Mockito.mock(CreateProblemPort.class);
-        CreateProblemService service = new CreateProblemService(createProblemPort);
+        EventPublisherPort eventPublisherPort = Mockito.mock(EventPublisherPort.class);
+        CreateProblemService service = new CreateProblemService(createProblemPort, eventPublisherPort);
 
         assertThrows(ParameterNotFoundException.class, () -> service.createProblem(problem));
     }
