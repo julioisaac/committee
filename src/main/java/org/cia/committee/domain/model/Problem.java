@@ -1,4 +1,4 @@
-package org.cia.committee.domain.problem.model;
+package org.cia.committee.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -11,15 +11,18 @@ public class Problem {
 
     private UUID committeeUUID;
 
+    private UUID userUUID;
+
     private Comment comment;
 
     private LocalDateTime createdAt;
 
     private ProblemState state;
 
-    public Problem(String name) {
+    public Problem(UUID userUUID, String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
+        this.userUUID = userUUID;
         this.createdAt = LocalDateTime.now();
         this.state = ProblemState.OPENED;
     }
@@ -36,9 +39,7 @@ public class Problem {
     }
 
     public void assign(UUID committeeUUID) {
-        if (canBeAssigned()) {
-            this.committeeUUID = committeeUUID;
-        }
+        this.committeeUUID = committeeUUID;
     }
 
     public void close() {
@@ -55,6 +56,10 @@ public class Problem {
 
     public ProblemState getState() {
         return state;
+    }
+
+    public UUID getUserUUID() {
+        return userUUID;
     }
 
     public UUID getCommitteeUUID() {

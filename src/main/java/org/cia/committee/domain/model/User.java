@@ -1,4 +1,4 @@
-package org.cia.committee.domain.user.model;
+package org.cia.committee.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
